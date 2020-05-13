@@ -1,6 +1,10 @@
 import express, { Request, Response } from "express";
 import { AddressInfo } from "net";
 import {signup} from './endpoints/signup'
+import { UserData } from "./data/userData";
+import { HashGenerator } from "./services/hashGenerator";
+import { login } from "./endpoints/login";
+import { getUserProfile } from "./endpoints/getUserInfo";
 
 const app = express()
 app.use(express.json());
@@ -14,3 +18,5 @@ const server = app.listen(process.env.PORT || 3003, () => {
 });;
 
 app.post('/signup', signup)
+app.post('/login', login)
+app.get('/user/profile', getUserProfile)

@@ -7,7 +7,7 @@ import { BaseDataBase } from "../data/BaseDataBase";
 
 export const signup = async (req: Request, res: Response): Promise<any> => {
     try {
-        // if (req.body.name && req.body.email && req.body.password) {
+        if (req.body.name && req.body.email && req.body.password) {
             const idCreator = new IdGenerator()
             const newId = idCreator.generator()
 
@@ -25,19 +25,19 @@ export const signup = async (req: Request, res: Response): Promise<any> => {
             res.status(200).send({
                 token: newToken
             })
-        // }
-        // else {
-        //     throw new Error('Por favor preencha todos os campos para prosseguir')
+        }
+        else {
+            throw new Error('Por favor preencha todos os campos para prosseguir')
 
-        // }
+        }
     }
     catch (err) {
         res.status(400).send({
             message: err.message
         })
     }
-    // finally{
-    //     BaseDataBase.destroyConnection()
-    // }
+    finally{
+        BaseDataBase.destroyConnection()
+    }
 }
 
