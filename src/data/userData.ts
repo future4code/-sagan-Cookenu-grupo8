@@ -16,4 +16,11 @@ export class UserData extends BaseDataBase{
         })
         return userData
     }
+
+    public async getUserById(id:string){
+        const userData = await this.getConnection().select('*').from(UserData.Table_Name).where({
+            id
+        })
+        return userData
+    }
 }
