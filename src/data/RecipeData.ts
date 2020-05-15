@@ -27,9 +27,33 @@ export class RecipeData extends BaseDataBase {
     return getRecipesList
   }
 
-  public async updateRecipe(id: string, changes?: object): Promise<void> {
-    const connection = this.getConnection()
-    await connection(RecipeData.TABLE_NAME).where({id}).update(changes!)
+  public async updateRecipe(Recipe_id: string, title?: string, description?: string): Promise<void> {
+    if (title && description) {
+      await this.getConnection().raw(`
+      UPDATE ${RecipeData.TABLE_NAME}
+      SET title = "${title}", description ="${description}"
+      WHERE Recipe_id = "${Recipe_id}"
+      `)
+    }
+    else if (title) {
+      await this.getConnection().raw(`
+      UPDATE ${RecipeData.TABLE_NAME}
+      SET title = "${title}"
+      WHERE Recipe_id = "${Recipe_id}" 
+      `)
+    }
+
+    else if (description) {
+      await this.getConnection().raw(`
+      UPDATE ${RecipeData.TABLE_NAME}
+      SET description ="${description}"
+      WHERE Recipe_id = "${Recipe_id}"
+      `)
+    }
+  }
+
+  public async deleteRecipe(Recipe_id: string): Promise<void> {
+    await this.getConnection().delete().from(RecipeData.TABLE_NAME).where({Recipe_id})
   }
 
 }

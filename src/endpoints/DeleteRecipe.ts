@@ -3,7 +3,7 @@ import { BaseDataBase } from '../data/BaseDataBase'
 import { TokenGenarator } from '../services/tokenGenerator'
 import { RecipeData } from '../data/RecipeData'
 
-export const updateRecipe = async (req: Request, res: Response) => {
+export const DeleteRecipe = async (req: Request, res: Response) => {
   try {
     const authorization = req.headers.authorization as string
 
@@ -13,15 +13,15 @@ export const updateRecipe = async (req: Request, res: Response) => {
     const recipeCreator = new RecipeData
     const recipeId = await recipeCreator.getRecipeById(req.params.id)
 
-    if(recipeId[0].user_id === token.id ){
-      const recipe = await recipeCreator.updateRecipe(req.params.id,req.body.title, req.body.description)
+    if(recipeId[0].user_id === token.id || token.role ==="admin"){
+      const deleteRecipe = await recipeCreator.deleteRecipe(req.params.id)
   
       res.status(200).send({
-        recipe,
-        message: "Recipe updated succefully!"
+        deleteRecipe,
+        message: "Recipe deleted succefully!"
       })
     } else{
-      throw new Error("Voce não pode alterar uma receita de outro usuário!")
+      throw new Error("Voce não pode deletar uma receita de outro usuário!")
     }
     
 
