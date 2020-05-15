@@ -11,6 +11,7 @@ import { getRecipeById } from "./endpoints/getRecipeById";
 import { UserFollow } from "./endpoints/UserFollow";
 import { UnfollowUser } from "./endpoints/UnfollowUser";
 import { getAllRecipes } from "./endpoints/getAllRecipes";
+import { } from "./endpoints/UpdateRecipe" ;
 
 const app = express()
 app.use(express.json());
@@ -26,9 +27,10 @@ const server = app.listen(process.env.PORT || 3003, () => {
 app.post('/signup', signup)
 app.post('/login', login)
 app.get('/user/profile', getUserProfile)
-app.get('/user/:id', getAnotherUserProfile)
 app.post("/recipe", CreateRecipe)
 app.get("/recipe/:id", getRecipeById)
 app.post("/user/follow", UserFollow)
 app.post("/user/unfollow", UnfollowUser)
 app.get("/user/feed", getAllRecipes)
+app.get('/user/:id', getAnotherUserProfile)
+// app.post('/recipe/update', updateRecipe)

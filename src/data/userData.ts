@@ -4,9 +4,9 @@ import { BaseDataBase } from './BaseDataBase';
 export class UserData extends BaseDataBase{
     public static Table_Name = 'UsersCookenu'
 
-    public async createUser(name:string, email:string, password:string, id:string):Promise<void>{
+    public async createUser(name:string, email:string, password:string, id:string, role:string):Promise<void>{
         await this.getConnection().insert({
-            name, email, password, id
+            name, email, password, id, role
         }).into(UserData.Table_Name)
     }
 

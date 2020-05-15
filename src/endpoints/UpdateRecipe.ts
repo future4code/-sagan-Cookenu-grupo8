@@ -1,26 +1,25 @@
 import { Request, Response } from 'express'
 import { BaseDataBase } from '../data/BaseDataBase'
-import { IdGenerator } from '../services/idGenerator'
 import { TokenGenarator } from '../services/tokenGenerator'
 import { RecipeData } from '../data/RecipeData'
 
-export const CreateRecipe = async (req: Request, res: Response) => {
+export const updateRecipe = async (req: Request, res: Response) => {
   try {
     const authorization = req.headers.authorization as string
-
-    const idCreator = new IdGenerator
-    const id = idCreator.generator();
 
     const tokenCreator = new TokenGenarator
     const token = tokenCreator.verify(authorization)
 
+    const update = {
+        title: req.body.title,
+        description: req.body.description
+    }
+
     const recipeCreator = new RecipeData
-    const recipe = await recipeCreator.createRecipe(id, token.id, req.body.title, 
-    req.body.description)
+    const recipe = await recipeCreator.updateRecipe(req.body.id, update)
 
     res.status(200).send({
-      recipe,
-      message: "Recipe created succefully!"
+      message: "Recipe updated succefully!"
     })
 
   } catch (err) {

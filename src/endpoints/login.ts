@@ -17,7 +17,8 @@ export const login = async (req: Request, res: Response): Promise<any> => {
             if (hash) {
                 const tokenCreator = new TokenGenarator()
                 const newToken = tokenCreator.token({
-                    id: user[0].id
+                    id: user[0].id,
+                    role: user[0].role
                 })
                 res.status(200).send({
                     token: newToken
