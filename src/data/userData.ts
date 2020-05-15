@@ -29,10 +29,9 @@ export class UserData extends BaseDataBase{
             Followed_id, Follower_id
         }).into("AuxTableUser")
     }
-    public async DeleteUserFollow(Followed_id:string, Follower_id: string):Promise<void>{
+    public async DeleteUserFollow(Followed_id?:string, Follower_id?: string):Promise<void>{
         const deleteFollow = await this.getConnection().delete().from("AuxTableUser").where({
             Followed_id, Follower_id
         })
     }
-
 }

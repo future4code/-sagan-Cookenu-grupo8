@@ -1,8 +1,6 @@
 import express, { Request, Response } from "express";
 import { AddressInfo } from "net";
 import {signup} from './endpoints/signup'
-import { UserData } from "./data/userData";
-import { HashGenerator } from "./services/hashGenerator";
 import { login } from "./endpoints/login";
 import { getUserProfile } from "./endpoints/getUserInfo";
 import { getAnotherUserProfile } from "./endpoints/getAnotherUserProfile";
@@ -11,7 +9,10 @@ import { getRecipeById } from "./endpoints/getRecipeById";
 import { UserFollow } from "./endpoints/UserFollow";
 import { UnfollowUser } from "./endpoints/UnfollowUser";
 import { getAllRecipes } from "./endpoints/getAllRecipes";
-import { } from "./endpoints/UpdateRecipe" ;
+import { updateRecipe } from "./endpoints/UpdateRecipe";
+import { DeleteRecipe } from "./endpoints/DeleteRecipe";
+
+
 
 const app = express()
 app.use(express.json());
@@ -24,6 +25,7 @@ const server = app.listen(process.env.PORT || 3003, () => {
     }
 });;
 
+
 app.post('/signup', signup)
 app.post('/login', login)
 app.get('/user/profile', getUserProfile)
@@ -33,4 +35,5 @@ app.post("/user/follow", UserFollow)
 app.post("/user/unfollow", UnfollowUser)
 app.get("/user/feed", getAllRecipes)
 app.get('/user/:id', getAnotherUserProfile)
-// app.post('/recipe/update', updateRecipe)
+app.post("/recipe/update/:id", updateRecipe)
+app.delete("/recipe/delete/:id", DeleteRecipe)
