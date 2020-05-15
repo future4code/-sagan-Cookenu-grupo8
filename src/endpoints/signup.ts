@@ -15,11 +15,13 @@ export const signup = async (req: Request, res: Response): Promise<any> => {
             const newHash = await hashCreator.hash(req.body.password)
 
             const userCreator = new UserData()
-            const newUser = await userCreator.createUser(req.body.name, req.body.email, newHash, newId)
+            const newUser = await userCreator.createUser(req.body.name, req.body.email, 
+            newHash, newId,req.body.role)
 
             const tokenCreator = new TokenGenarator()
             const newToken = tokenCreator.token({
-                id: newId
+                id: newId,
+                role: req.body.role
             })
 
             res.status(200).send({
